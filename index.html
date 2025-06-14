@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Création De Map Buildfight</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .modal-enter {
+      opacity: 0;
+      transform: scale(0.95);
+      transition: all 0.3s ease;
+    }
+
+    .modal-enter-active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .transition-all {
+      transition: all 0.5s ease;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-900 font-sans">
+
+  <!-- Navigation -->
+  <header class="flex justify-between items-center p-4 bg-white shadow-md">
+    <h1 class="text-xl font-bold">Azvix Map</h1>
+    <button id="menu-btn" class="md:hidden flex flex-col space-y-1">
+      <span class="w-6 h-0.5 bg-gray-700"></span>
+      <span class="w-6 h-0.5 bg-gray-700"></span>
+      <span class="w-6 h-0.5 bg-gray-700"></span>
+    </button>
+  </header>
+
+  <!-- Menu mobile -->
+  <div id="mobile-menu" class="md:hidden hidden bg-white p-4 space-y-2 shadow">
+    <a href="#" class="block hover:text-gray-600">Accueil</a>
+    <a href="#" class="block hover:text-gray-600">À propos</a>
+    <a href="#" class="block hover:text-gray-600">Contact</a>
+  </div>
+
+  <!-- Contenu principal -->
+  <main class="flex flex-col items-center justify-center text-center px-4 py-16">
+    <h2 class="text-4xl font-bold mb-8">Création De Map Buildfight</h2>
+
+    <!-- Section images -->
+    <h3 class="text-2xl font-semibold mb-6">Exemples</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl w-full px-4">
+      <img src="https://creatorspace.imgix.net/users/cmajmxaiz03pioc01vdbef8ua/c64FZbkBQXFKrFPy-image.png?w=750&h=750" alt="Map 1" class="rounded-lg shadow-md hover:scale-105 transition duration-300 cursor-pointer" onclick="openModal(1)" />
+      <img src="https://creatorspace.imgix.net/users/cmajmxaiz03pioc01vdbef8ua/G0vLWFl4oKsrDpRi-Capture%2520d%25E2%2580%2599%25C3%25A9cran%25202025-05-31%2520155155.png?w=750&h=750" alt="Map 2" class="rounded-lg shadow-md hover:scale-105 transition duration-300 cursor-pointer" onclick="openModal(2)" />
+      <img src="https://creatorspace.imgix.net/users/cmajmxaiz03pioc01vdbef8ua/KXxIKanr3uH1kYWX-Nouveau%2520projet%2520(389).png?w=750&h=750" alt="Map 3" class="rounded-lg shadow-md hover:scale-105 transition duration-300 cursor-pointer" onclick="openModal(3)" />
+    </div>
+
+    <!-- Bouton Informations -->
+    <div class="mt-12">
+      <button onclick="toggleInfos()" class="px-6 py-3 bg-gray-800 text-white font-semibold rounded-xl shadow hover:bg-gray-700 transition duration-300">
+        Informations
+      </button>
+    </div>
+
+    <!-- Section Informations animée (agrandie) -->
+    <div id="info-section" class="mt-6 max-w-5xl w-full text-left rounded-xl shadow-lg p-8 opacity-0 scale-95 translate-y-4 pointer-events-none transition-all duration-500 bg-blue-200 text-gray-900">
+      <h4 class="text-2xl font-bold mb-2">À propos du projet</h4>
+      <p class="leading-relaxed">
+        Ce projet présente différentes maps créées pour Azvix, Liama et Jigari. <br>
+        Chaque carte est optimisée pour le gameplay compétitif et l'immersion des joueurs, avec un style visuel moderne et des mécaniques uniques. Les maps sont construites pour que les visiteurs s'amusent le plus possible. <br>
+        💰  Ce service est payant par Paypal.<br>
+        📩  Pour me contacter, veuillez ajouter "azvix_" sur discord.
+      </p>
+    </div>
+
+<!-- Bouton PayPal -->
+<div class="mt-8 w-full max-w-5xl px-8">
+  <a href="https://paypal.me/LucasSchoepff?country.x=FR&locale.x=fr_FR" target="_blank" rel="noopener noreferrer"
+     class="block bg-gray-400 hover:bg-gray-500 text-gray-900 font-bold text-center py-5 rounded-xl shadow-lg transition duration-300">
+    Faire un don sur PayPal
+  </a>
+</div>
+
+
+
+  </main>
+
+  <!-- Modal -->
+  <div id="modal-overlay" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+    <div id="modal" class="bg-white rounded-2xl shadow-xl p-6 w-11/12 max-w-lg text-left relative modal-enter">
+      <h3 id="modal-title" class="text-2xl font-bold mb-2">Titre</h3>
+      <p id="modal-desc" class="text-gray-700 mb-4">Description</p>
+      <button onclick="closeModal()" class="absolute top-3 right-3 text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+    </div>
+  </div>
+
+  <script>
+    const modalOverlay = document.getElementById('modal-overlay');
+    const modal = document.getElementById('modal');
+    const title = document.getElementById('modal-title');
+    const desc = document.getElementById('modal-desc');
+
+    const infos = {
+      1: {
+        titre: "Map 1 : Map pour Azvix",
+        description: "Une map esthétique avec des fonctionnalités toutes utiles et faites pour que la communauté apprécie."
+      },
+      2: {
+        titre: "Map 2 : Map pour Liama",
+        description: "Sur cette map, il y a des fonctionnalités pour que le joueur soit en immersion totale dedans et puisse sélectionner sa manière de jouer."
+      },
+      3: {
+        titre: "Map 3 : Map pour Jigari",
+        description: "Map grande pour que le joueur puisse bien voir les fonctionnalités de la map."
+      }
+    };
+
+    function openModal(id) {
+      title.textContent = infos[id].titre;
+      desc.textContent = infos[id].description;
+      modalOverlay.classList.remove('hidden');
+      setTimeout(() => {
+        modal.classList.add('modal-enter-active');
+      }, 10);
+    }
+
+    function closeModal() {
+      modal.classList.remove('modal-enter-active');
+      setTimeout(() => {
+        modalOverlay.classList.add('hidden');
+      }, 300);
+    }
+
+    // Menu mobile
+    document.getElementById('menu-btn').addEventListener('click', () => {
+      document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+
+    // Toggle section info
+    function toggleInfos() {
+      const info = document.getElementById('info-section');
+      const isVisible = !info.classList.contains('pointer-events-none');
+
+      if (isVisible) {
+        info.classList.add('opacity-0', 'scale-95', 'translate-y-4', 'pointer-events-none');
+        info.classList.remove('opacity-100', 'scale-100', 'translate-y-0');
+      } else {
+        info.classList.remove('opacity-0', 'scale-95', 'translate-y-4', 'pointer-events-none');
+        info.classList.add('opacity-100', 'scale-100', 'translate-y-0');
+      }
+    }
+  </script>
+
+</body>
+</html>
